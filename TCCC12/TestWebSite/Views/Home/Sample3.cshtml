@@ -1,0 +1,53 @@
+﻿@using TCCC12.Javascript
+@using System.Linq.Expressions
+@using TestWebSite.Models.Home
+@{
+    Sample3 count3 = new Sample3()
+    {
+        Child = new Sample3Child(3)
+    };
+    Sample3 count4 = new Sample3()
+    {
+        Child = new Sample3Child(4)
+    };
+    
+    Expression<Func<Sample3, int>> function = x => x.Child.GetCount() + 1;
+    Func<Sample3, int> compiledFunction = function.Compile();
+}
+
+<div class="container">
+    <h2> </h2>
+    <div>x = count3</div>
+    <div>x = count4</div>
+</div>
+
+<div class="container">
+    <h2>C#:</h2>
+    <div>@compiledFunction(count3)</div>
+    <div>@compiledFunction(count4)</div>
+</div>
+
+<div class="container">
+    <h2>Javascript:</h2>
+    <script type="text/javascript">
+        var count3 = {
+            Child: {
+                GetCount: function(){
+                    return 3;
+                }
+            }
+        };
+
+        var count4 = {
+            Child: {
+                GetCount: function(){
+                    return 4;
+                }
+            }
+        };
+
+        @Html.Raw(JavascriptFunction.CreateFunction("test", function))
+        document.write("<div>" + test(count3) + "</div>");
+        document.write("<div>" + test(count4) + "</div>");
+    </script>
+</div>

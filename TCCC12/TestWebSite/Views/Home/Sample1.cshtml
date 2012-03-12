@@ -1,0 +1,30 @@
+﻿@using TCCC12.Javascript
+@using System.Linq.Expressions
+@{
+    Expression<Func<int, int, bool>> function = (x, y) => x == y || x > 10;
+    Func<int, int, bool> compiledFunction = function.Compile();
+}
+
+<div class="container">
+    <h2> </h2>
+    <div>x = 1, y = 1</div>
+    <div>x = 1, y = 2</div>
+    <div>x = 11, y = 2</div>
+</div>
+
+<div class="container">
+    <h2>C#:</h2>
+    <div>@compiledFunction(1, 1)</div>
+    <div>@compiledFunction(1, 2)</div>
+    <div>@compiledFunction(11, 2)</div>
+</div>
+
+<div class="container">
+    <h2>Javascript:</h2>
+    <script type="text/javascript">
+        @Html.Raw(JavascriptFunction.CreateFunction("test", function))
+        document.write("<div>" + test(1, 1) + "</div>");
+        document.write("<div>" + test(1, 2) + "</div>");
+        document.write("<div>" + test(11, 2) + "</div>");
+    </script>
+</div>

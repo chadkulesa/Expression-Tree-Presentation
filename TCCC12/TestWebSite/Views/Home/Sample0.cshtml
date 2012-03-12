@@ -1,0 +1,27 @@
+﻿@using TCCC12.Javascript
+@using System.Linq.Expressions
+@{
+    Expression<Func<int, bool>> function = x => x == 1;
+    Func<int, bool> compiledFunction = function.Compile();
+}
+
+<div class="container">
+    <h2> </h2>
+    <div>x = 1</div>
+    <div>x = 2</div>
+</div>
+
+<div class="container">
+    <h2>C#:</h2>
+    <div>@compiledFunction(1)</div>
+    <div>@compiledFunction(2)</div>
+</div>
+
+<div class="container">
+    <h2>Javascript:</h2>
+    <script type="text/javascript">
+        @Html.Raw(JavascriptFunction.CreateFunction("test", function))
+        document.write("<div>" + test(1) + "</div>");
+        document.write("<div>" + test(2) + "</div>");
+    </script>
+</div>

@@ -1,0 +1,27 @@
+﻿@using TCCC12.Javascript
+@using System.Linq.Expressions
+@{
+    Expression<Func<string, bool>> function = x => x.Substring(0, 4) == "Cool";
+    Func<string, bool> compiledFunction = function.Compile();
+}
+
+<div class="container">
+    <h2> </h2>
+    <div>x = "Cool string"</div>
+    <div>x = "Not cool string</div>
+</div>
+
+<div class="container">
+    <h2>C#:</h2>
+    <div>@compiledFunction("Cool string")</div>
+    <div>@compiledFunction("Not cool string")</div>
+</div>
+
+<div class="container">
+    <h2>Javascript:</h2>
+    <script type="text/javascript">
+        @Html.Raw(JavascriptFunction.CreateFunction("test", function))
+        document.write("<div>" + test("Cool string") + "</div>");
+        document.write("<div>" + test("Not cool string") + "</div>");
+    </script>
+</div>
